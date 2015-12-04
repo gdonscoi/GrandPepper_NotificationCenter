@@ -21,10 +21,6 @@ class NotificationController < Sinatra::Base
     erb:form
   end
 
-  get '/teste' do
-    erb:hello
-  end
-
   post '/mobile/send' do
     title = params['title']
     msg = params['message']
@@ -41,7 +37,7 @@ class NotificationController < Sinatra::Base
         :message => msg
       }
     }
-    # "#{post_args.to_json}"
+
     resp = RestClient.post settings.GOOGLE_GCM_HTTP_URL,
                           post_args.to_json,
                           :Authorization => 'key=' + GOOGLE_API_KEY,
@@ -53,23 +49,19 @@ class NotificationController < Sinatra::Base
     @removedKeys = 0
 
     if hash['failure'] > 0
-      resp += "<br>Deletados:"
       hash['results'].each_with_index do |registration, index|
         if registration['error'] == 'NotRegistered'
           GCM.where(registration: registration_ids[index]).first.delete
           removedKeys += 1
-          resp += " <br> #{index}, "
         end
       end
     end
 
     if hash['canonical_ids'] > 0
-      resp += "<br>Duplicados:"
       hash['results'].each_with_index do |registration, index|
         if registration['registration_id'] != ""
           GCM.where(registration: registration_ids[index]).first.delete
           removedKeys += 1
-          resp += " <br> #{index}, "
         end
       end
     end
@@ -78,15 +70,12 @@ class NotificationController < Sinatra::Base
   end
 
   post '/mobile/save' do
-    # method = params['method']
     regId = params['reg-id']
 
     return if(GCM.exists?(:registration => regId.to_s))
 
     gcm = GCM.new(registration: regId)
     gcm.save
-    "Salvou #{regId}"
-    # "method = #{method}, reg-id = #{regId} , Constantes = #{settings.GOOGLE_GCM_HTTP_URL} , #{settings.GOOGLE_API_KEY}"
   end
 
 end
