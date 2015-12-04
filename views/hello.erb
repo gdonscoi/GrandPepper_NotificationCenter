@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Grand Pepper Notification Center</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-grid.css">
+  </head>
+  <body>
+    <div class="col-sm-offset-2 col-sm-8 col-xs-offset-0 col-xs-12">
+      <header>
+        <h2>
+          Grand Pepper Notification Center!
+        </h2>
+        <h3>
+
+        </h3>
+        <img class="logo" src="../images/grandPepper.png">
+      </header>
+
+      <div class="info-container col-sm-offset-2 col-sm-8 col-xs-offset-0 col-xs-12">
+        <p class="info">Enviado para  <%= @sucessCount %> dispositivos</p>
+        <p class="info">Chaves removidas: <%= @removedKeys %></p>
+      </div>
+
+      <a href="http://amendoim:9292/mobile">
+         <input class="btn btn-lg btn-primary col-sm-offset-2 col-sm-8 col-xs-offset-0 col-xs-12" type="button" value="Enviar novo spam" />
+      </a>
+    </div>
+  <script src="../javascripts/jquery.min.js"></script>
+  <script src="../javascripts/bootstrap.min.js"></script>
+  <body>
+</html>

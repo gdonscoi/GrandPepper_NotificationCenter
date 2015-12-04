@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Grand Pepper Notification Center</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/base.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-grid.css">
+  </head>
+  <body>
+    <div class="col-sm-offset-2 col-sm-8 col-xs-offset-0 col-xs-12">
+      <header>
+        <h2>
+          Grand Pepper Notification Center!
+        </h2>
+        <h3>
+
+        </h3>
+        <img class="logo" src="../images/grandPepper.png">
+      </header>
+      <form action="/mobile/send" method="POST" name="notify_form" id="notify_form" class="form-container">
+        <input type="hidden" name="method" value="send-gcm-message">
+        <div class="row">
+          <input type="text" name="title" class="form-field" placeholder="Título da mensagem">
+        </div>
+        <div class="row">
+          <textarea name="message" class="form-field form-area" placeholder="Mensagem a ser enviada"></textarea>
+        </div>
+        <div class="row padding-top-row">
+          <button type="submit" name="notify_btn" class="btn btn-lg btn-primary col-xs-12 col-sm-8 col-md-6 col-lg-4">
+            Enviar spam para todo mundo!
+          </button>
+        </div>
+      </form>
+    </div>
+  <script src="../javascripts/jquery.min.js"></script>
+  <script src="../javascripts/bootstrap.min.js"></script>
+  <body>
+</html>
