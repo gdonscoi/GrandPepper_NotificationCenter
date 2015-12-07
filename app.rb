@@ -25,22 +25,19 @@ class NotificationController < Sinatra::Base
     title = params['title']
     msg = params['message']
 
-    registration_ids = Array.new
-    GCM.all.each do |g|
-      registration_ids.push(g.registration)
-    end
+    registration_ids = GCM.all.map { |g| g.registration }
 
     post_args = {
-      :registration_ids => registration_ids,
-      :data => {
-        :title    => title,
-        :message => msg
+      registration_ids: registration_ids,
+      data: {
+        title: title,
+        message: msg
       }
     }
 
     resp = RestClient.post settings.GOOGLE_GCM_HTTP_URL,
                           post_args.to_json,
-                          :Authorization => 'key=' + GOOGLE_API_KEY,
+                          :Authorization => "key=#{GOOGLE_API_KEY}",
                           :content_type => :json,
                           :accept => :json
     hash = JSON.parse resp
@@ -51,8 +48,8 @@ class NotificationController < Sinatra::Base
     if hash['failure'] > 0
       hash['results'].each_with_index do |registration, index|
         if registration['error'] == 'NotRegistered'
-          GCM.where(registration: registration_ids[index]).first.delete
-          removedKeys += 1
+          GCM.find_by_registration(registration_ids[index]).delete
+          @removedKeys += 1
         end
       end
     end
@@ -60,8 +57,8 @@ class NotificationController < Sinatra::Base
     if hash['canonical_ids'] > 0
       hash['results'].each_with_index do |registration, index|
         if registration['registration_id'] != ""
-          GCM.where(registration: registration_ids[index]).first.delete
-          removedKeys += 1
+          GCM.find_by_registration(registration_ids[index]).delete
+          @removedKeys += 1
         end
       end
     end
@@ -72,7 +69,7 @@ class NotificationController < Sinatra::Base
   post '/mobile/save' do
     regId = params['reg-id']
 
-    return if(GCM.exists?(:registration => regId.to_s))
+    return if GCM.exists?(:registration => regId.to_s)
 
     gcm = GCM.new(registration: regId)
     gcm.save
