@@ -4,7 +4,7 @@ require 'active_record'
 require './models/gcm'
 require 'json'
 require 'rest-client'
-require './config/environments'
+require './config/secrets'
 
 class NotificationController < Sinatra::Base
 
