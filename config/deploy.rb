@@ -10,8 +10,8 @@ set :branch, "master"
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, '/var/www/my_app_name'
-set :deploy_to, "/grandpepper-assets/gcm/production"
-set :tmp_dir, "/grandpepper-assets/gcm/tmp"
+set :deploy_to, "/gcm/production"
+set :tmp_dir, "/gcm/tmp"
 # Default value for :scm is :git
 # set :scm, :git
 
@@ -25,7 +25,7 @@ set :tmp_dir, "/grandpepper-assets/gcm/tmp"
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, fetch(:linked_files, []).push('../config/secrets.rb')
+set :linked_files, fetch(:linked_files, []).push('config/secrets.rb')
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
@@ -41,15 +41,17 @@ set :rvm_type, :system
 set :rvm_ruby_version, '2.1.5@pressit'
 set :rvm_roles, [:app, :web]
 
+set :passenger_restart_with_touch, true
+
 namespace :deploy do
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :sequence, wait: 5 do
-      execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
+  # after :restart, :clear_cache do
+  #   on roles(:web), in: :sequence, wait: 5 do
+  #     execute :touch, release_path.join('tmp/restart.txt')
+  #   end
+  # end
 
 
-  after :publishing, :restart
+  # after :publishing, :restart
 
 end
