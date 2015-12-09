@@ -19,7 +19,7 @@ build/
 /_yardoc/
 /doc/
 /rdoc/
-config/secrets.yml
+config/secrets.rb
 
 ## Environment normalisation:
 /.bundle/
