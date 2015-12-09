@@ -25,7 +25,6 @@ GEM
     mime-types (2.5)
     minitest (5.8.3)
     netrc (0.11.0)
-    pg (0.18.4)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -55,11 +54,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   json
-  pg
   rest-client
   sinatra
   sinatra-activerecord
   sqlite3
-
-BUNDLED WITH
-   1.10.4
