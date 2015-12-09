@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
-lock '3.4.0'
+lock '3.2.1'
 
-set :application, 'grandpepper_gcm'
+set :application, 'gcm'
 set :repo_url, 'git@github.com:gdonscoi/GrandPepper_NotificationCenter.git'
 
 # Default branch is :master
@@ -25,7 +25,7 @@ set :tmp_dir, "/grandpepper-assets/gcm/tmp"
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, fetch(:linked_files, []).push('config/secrets.rb')
+set :linked_files, fetch(:linked_files, []).push('../config/secrets.rb')
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
@@ -36,15 +36,20 @@ set :linked_files, fetch(:linked_files, []).push('config/secrets.rb')
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+# RVM - create grandpepper
+set :rvm_type, :system
+set :rvm_ruby_version, '2.1.5@pressit'
+set :rvm_roles, [:app, :web]
+
 namespace :deploy do
 
   after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+    on roles(:web), in: :sequence, wait: 5 do
+      execute :touch, release_path.join('tmp/restart.txt')
     end
   end
+
+
+  after :publishing, :restart
 
 end

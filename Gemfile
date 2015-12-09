@@ -8,6 +8,6 @@ gem 'json'
 gem 'rest-client'
 
 # deploy
-gem "capistrano"
-gem "capistrano-bundler"
+gem 'capistrano', '~> 3.2.1'
+gem 'capistrano-bundler', '~> 1.1.3'
 gem "capistrano-passenger"
